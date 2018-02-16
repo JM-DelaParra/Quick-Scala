@@ -8,7 +8,7 @@ class Z() { // Companion class
   def fb = foo + "-" + bar
 } // class Z()
 
-object Z { // Companion object (static behavior in Java)
+object Z { // (Named same as class) Companion object: not receive arguments, its like a singleton and has the static behavior from Java
   val z = new Z() // instance of companion class
   def sum(a: String, b: String) = a + " " + b
   private val bar = "bar"
