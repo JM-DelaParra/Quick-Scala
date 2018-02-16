@@ -2,7 +2,7 @@ package mypackage
 
 class Z() { // Companion class
   import Z._ // import companion object components
-  override def toString = ("<<< class Z >>>") // overwrite parent class method
+  override def toString = ("class Z") // overwrite parent class method
   def sum(a: Int, b: Int) = a + b // public by default
   private val foo = "foo"
   def fb = foo + "-" + bar
