@@ -3,6 +3,10 @@
  */
 import java.util.Date // Java Library
 import java.text.SimpleDateFormat // Java Library
+import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
+import scala.util.{Random, Failure, Success}
 import mypackage.{ // multi-import
   MyClassX,
   MyClassY,
@@ -36,6 +40,8 @@ object MainObject {
     genericTypeTesting
     println("\n__________ trait ____________________")
     traitTesting
+    println("\n__________ future ____________________")
+    futureTesting
   } // def work()
 
 } // object MainObject
@@ -126,8 +132,30 @@ object TestingObject {
     println("p1.isEqual(p2):    " + p1.isEqual(p2))
     println("p1.isNotEqual(p2): " + p1.isNotEqual(p2))
     println("p1.isEqual(p3):    " + p1.isEqual(p3))
-  } // def genericTypeTesting()
+  } // def traitTesting()
 
+  def futureTesting() {
+    println("start future")
+    val future = Future {
+      Thread.sleep(1000 + Random.nextInt(1000))
+      123
+    }
+    future.onComplete {
+      case Success(value) => println(s"The callback is $value")
+      case Failure(e)     => e.printStackTrace
+    }
+    println(s"wait"); Thread.sleep(750);
+    println(s"wait"); Thread.sleep(750);
+    println(s"wait"); Thread.sleep(750);
+    println(s"wait"); Thread.sleep(750);
+    println(s"blocking >>>")
+    val result = Await.result(Future {
+      Thread.sleep(2500)
+      456
+    }, 5 second)
+    println(s"The callback is $result")
+    println(s"<<< blocking")
+  } // def genericTypeTesting()
 } // object TestingObject
 
 case object MyCaseObject {
